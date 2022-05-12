@@ -1,0 +1,7 @@
+﻿  RayTracer.cpp
+D:\code\RayTracer\vec3.h(61,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\code\RayTracer\RayTracer.cpp(10,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\code\RayTracer\RayTracer.cpp(22,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\code\RayTracer\RayTracer.cpp(23,17): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+D:\code\RayTracer\RayTracer.cpp(23,65): warning C4305: “参数”: 从“double”到“float”截断
+  RayTracer.vcxproj -> D:\code\RayTracer\Debug\RayTracer.exe
