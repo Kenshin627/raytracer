@@ -1,7 +1,17 @@
 ﻿  RayTracer.cpp
-D:\code\RayTracer\vec3.h(61,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-D:\code\RayTracer\RayTracer.cpp(10,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-D:\code\RayTracer\RayTracer.cpp(22,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-D:\code\RayTracer\RayTracer.cpp(23,17): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-D:\code\RayTracer\RayTracer.cpp(23,65): warning C4305: “参数”: 从“double”到“float”截断
-  RayTracer.vcxproj -> D:\code\RayTracer\Debug\RayTracer.exe
+E:\develop\raytracer\vec3.h(61,13): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\color.h(15,15): warning C4244: “*=”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\color.h(16,15): warning C4244: “*=”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\color.h(17,15): warning C4244: “*=”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\sphere.h(40,34): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\sphere.h(41,43): warning C4244: “参数”: 从“const double”转换到“float”，可能丢失数据
+E:\develop\raytracer\camera.h(15,21): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\camera.h(16,24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\camera.h(17,75): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\camera.h(21,42): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\camera.h(21,59): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\RayTracer.cpp(16,17): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\RayTracer.cpp(16,68): warning C4305: “参数”: 从“double”到“float”截断
+E:\develop\raytracer\RayTracer.cpp(16,46): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+E:\develop\raytracer\sphere.h(43): warning C4715: “sphere::hit”: 不是所有的控件路径都返回值
+  RayTracer.vcxproj -> E:\develop\raytracer\Debug\RayTracer.exe
