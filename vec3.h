@@ -43,6 +43,22 @@ public:
     inline float squared_length() const { return e[0] * e[0] + e[1] * e[1] + e[2] * e[2]; }
     inline void make_unit_vector();
 
+
+    inline static vec3 random() {
+        return vec3(random_double(), random_double(), random_double());
+    }
+
+    inline static vec3 random(double min, double max) {
+        return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+    }
+
+    bool near_zero() const {
+        const auto s = 1e-8;
+        return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
+    }
+
+
+
     float e[3];
 };
 
@@ -150,5 +166,24 @@ inline vec3 unit_vector(vec3 v) {
     return v / v.length();
 }
 
+vec3 random_in_unit_sphere() {
+    while (true) {
+        auto p = vec3::random(-1, 1);
+        if (p.squared_length() >= 1) continue;
+        return p;
+    }
+}
+
+vec3 random_unitVec() {
+    return unit_vector(random_in_unit_sphere());
+}
+
+inline vec3 reflect(const vec3& v, const vec3& n) {
+    return v - 2 * dot(v, n) * n;
+}
+
+
+using color3 = vec3;
+using point3 = vec3;
 
 #endif
