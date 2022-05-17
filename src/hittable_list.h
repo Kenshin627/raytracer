@@ -44,12 +44,12 @@ aabb surroundingbox(aabb& a, aabb& b) {
     point3 min_P(
         fmin(a.min().x(), b.min().x()),
         fmin(a.min().y(), b.min().y()),
-        fmin(a.min().z(), b.min().y())
+        fmin(a.min().z(), b.min().z())
     );
     point3 max_p(
         fmax(a.max().x(), b.max().x()),
-        fmax(a.max().z(), b.max().y()),
-        fmax(a.max().y(), b.max().y())
+        fmax(a.max().y(), b.max().y()),
+        fmax(a.max().z(), b.max().z())
     );
     return aabb(min_P, max_p);
 }
