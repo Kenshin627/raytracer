@@ -15,11 +15,11 @@ public:
 	point3 max() const { return maximun; }
 
 	bool hit(const ray& r, double t_min, double t_max) const {
-		/*for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 3; i++)
 		{
-			double direction = 1 / ray.direction()[i];
-			double t0 = (minimum[i] - ray.origin()[i]) * direction;
-			double t1 = (maximun[i] - ray.origin()[i]) * direction;
+			double direction = 1 / r.direction()[i];
+			double t0 = (minimum[i] - r.origin()[i]) * direction;
+			double t1 = (maximun[i] - r.origin()[i]) * direction;
 			if (direction < 0)
 			{
 				std::swap(t0, t1);
@@ -30,17 +30,6 @@ public:
 			{
 				return false;
 			}
-		}
-		return true;*/
-		for (int a = 0; a < 3; a++) {
-			auto t0 = fmin((minimum[a] - r.origin()[a]) / r.direction()[a],
-				(maximun[a] - r.origin()[a]) / r.direction()[a]);
-			auto t1 = fmax((minimum[a] - r.origin()[a]) / r.direction()[a],
-				(maximun[a] - r.origin()[a]) / r.direction()[a]);
-			t_min = fmax(t0, t_min);
-			t_max = fmin(t1, t_max);
-			if (t_max <= t_min)
-				return false;
 		}
 		return true;
 	}

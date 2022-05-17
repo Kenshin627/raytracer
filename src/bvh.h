@@ -18,34 +18,7 @@ class bvh_node : public hittable {
 public:
 	bvh_node() {}
 	bvh_node(const hittable_list& list):bvh_node(list.objects, 0, list.objects.size()) {}
-	bvh_node(const std::vector<shared_ptr<hittable>>& src_objects, size_t start, size_t end) {
-		size_t object_span = end - start;
-		int axis = random_int(0, 2);
-		auto objects = src_objects;
-		auto comparator = axis == 0 ? box_x_compare : axis == 1 ? box_y_compare : box_z_compare;
-		if (object_span == 1)
-		{
-			left = right = objects[start];
-		}else if (object_span == 2) {
-			if (box_compare(objects[start], objects[start + 1], axis))
-			{
-				left = objects[start];
-				right = objects[start + 1];
-			}
-			else {
-				left = objects[start + 1];
-				right = objects[start];
-			}
-		}
-		else {
-			std::sort( objects.begin() + start, objects.begin() + end, comparator);
-			auto mid = start + object_span / 2;
-			left = make_shared<bvh_node>(objects, start, mid);
-			right = make_shared<bvh_node>(objects, mid, end);
-		}
-		aabb box_left, box_right;
-		box = surroundingbox(box_left, box_right);
-	}
+	bvh_node(const std::vector<shared_ptr<hittable>>& src_objects, size_t start, size_t end);
 	virtual bool hit(const ray& ray, double t_min, double t_max, hit_record& rec) const override;
 	virtual bool boundingbox(aabb& out) const override;
 
@@ -58,6 +31,40 @@ public:
 bool bvh_node:: boundingbox(aabb& out) const {
 	out = box;
 	return true;
+}
+
+bvh_node::bvh_node(const std::vector<shared_ptr<hittable>>& src_objects, size_t start, size_t end) {
+	size_t object_span = end - start;
+	int axis = random_int(0, 2);
+	auto objects = src_objects;
+	auto comparator = axis == 0 ? box_x_compare : axis == 1 ? box_y_compare : box_z_compare;
+	if (object_span == 1)
+	{
+		left = right = objects[start];
+	}
+	else if (object_span == 2) {
+		if (box_compare(objects[start], objects[start + 1], axis))
+		{
+			left = objects[start];
+			right = objects[start + 1];
+		}
+		else {
+			left = objects[start + 1];
+			right = objects[start];
+		}
+	}
+	else {
+		std::sort(objects.begin() + start, objects.begin() + end, comparator);
+		auto mid = start + object_span / 2;
+		left = make_shared<bvh_node>(objects, start, mid);
+		right = make_shared<bvh_node>(objects, mid, end);
+	}
+	aabb box_left, box_right;
+	if (!left->boundingbox(box_left) || !right->boundingbox(box_right))
+	{
+		std::cerr << "No bounding box in bvh_node constructor.\n";
+	}
+	box = surroundingbox(box_left, box_right);
 }
 
 bool bvh_node::hit(const ray& ray, double t_min, double t_max, hit_record& rec) const {

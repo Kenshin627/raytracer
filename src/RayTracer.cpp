@@ -72,8 +72,8 @@ hittable_list random_scene() {
 
     auto material3 = make_shared<metal>(color3(0.7, 0.6, 0.5), 0.0);
     world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
-    return world;
-    //return hittable_list(make_shared<bvh_node>(world));
+    //return world;
+    return hittable_list(make_shared<bvh_node>(world));
 }
 
 
@@ -82,10 +82,10 @@ int main()
 {
     //Image
     const auto aspect_ratio = 3.0 / 2.0;
-    const int image_width = 400;
+    const int image_width = 1000;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 10;
-    const int max_depth = 10;
+    const int samples_per_pixel = 100;
+    const int max_depth = 20;
 
     //world
     hittable_list world = random_scene();
