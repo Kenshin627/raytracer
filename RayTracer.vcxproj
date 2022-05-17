@@ -142,6 +142,8 @@
     <ClCompile Include="src\RayTracer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\aabb.h" />
+    <ClInclude Include="src\bvh.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\color.h" />
     <ClInclude Include="src\hittable.h" />

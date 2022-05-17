@@ -5,6 +5,7 @@
 #include "sphere.h"
 #include "camera.h"
 #include "material.h"
+#include "bvh.h"
 
 vec3 ray_color(const ray& r, const hittable& world, int maxDepth) {
     hit_record rec;
@@ -81,14 +82,14 @@ int main()
 {
     //Image
     const auto aspect_ratio = 3.0 / 2.0;
-    const int image_width = 1000;
+    const int image_width = 400;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     const int samples_per_pixel = 100;
     const int max_depth = 50;
 
     //world
     hittable_list world = random_scene();
-
+    bvh_node bvh(world);
     point3 lookfrom(13, 2, 3);
     point3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
@@ -115,7 +116,7 @@ int main()
                 auto u = (i + random_double()) / (image_width - 1);
                 auto v = (j + random_double()) / (image_height - 1);
                 ray r = cam.get_ray(u, v);
-                pixel_color += ray_color(r, world, max_depth);
+                pixel_color += ray_color(r, bvh, max_depth);
             }
             write_color(file, pixel_color, samples_per_pixel);
         }

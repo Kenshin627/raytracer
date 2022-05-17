@@ -9,6 +9,7 @@ public:
 	sphere() {}
 	sphere(point3 cen, double r, shared_ptr<material> m) : center(cen), radius(r), mat_ptr(m) {}
 	virtual bool hit(const ray& r, double t_min, double t_max, hit_record& rec) const override;
+	virtual bool boundingbox(aabb& out) const override;
 public:
 	point3 center;
 	double radius;
@@ -42,6 +43,12 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) cons
 	rec.p = r.at(rec.t);
 	vec3 outward_normal = (rec.p - center) / radius;
 	rec.set_face_normal(r, outward_normal);
+	return true;
+}
+
+bool sphere::boundingbox(aabb& out) const {
+	vec3 offset(radius, radius, radius);
+	out = aabb(center - offset, center + offset);
 	return true;
 }
 
