@@ -8,6 +8,9 @@
 class material {
 
 public:
+	virtual color3 emitted(double u, double v, const point3& p) const {
+		return color3(0.0, 0.0, 0.0);
+	}
 	virtual bool scatter(const ray& r_in, const hit_record& rec, color3& attenution, ray& scattered) const = 0;
 };
 
@@ -71,6 +74,21 @@ private:
 		r0 = r0 * r0;
 		return r0 + (1 - r0) * pow((1 - cosine), 5);
 	}
+};
+
+class diffuseLight : public material {
+public:
+	diffuseLight(shared_ptr<texture> a) :emit(a) {}
+	diffuseLight(color3 c) : emit(make_shared<solid_color>(c)) {}
+	virtual bool scatter(const ray& r_in, const hit_record& rec, color3& attenuation, ray& scattered) const override {
+		return false;
+	}
+
+	virtual color3 emitted(double u, double v, const vec3& p) const override {
+		return emit->value(u, v, p);
+	}
+public:
+	shared_ptr<texture> emit;
 };
 
 #endif // !MATERIAL_H

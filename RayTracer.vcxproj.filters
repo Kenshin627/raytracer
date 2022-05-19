@@ -56,6 +56,9 @@
     <ClInclude Include="src\texture.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\rect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\output.ppm" />
