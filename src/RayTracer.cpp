@@ -7,6 +7,9 @@
 #include "material.h"
 #include "bvh.h"
 #include "rect.h"
+#include "yz_rect.h"
+#include "xz_rect.h"
+#include "box.h"
 
 vec3 ray_color(const ray& r, const color3& background, const hittable& world, int maxDepth) {
     hit_record rec;
@@ -85,32 +88,50 @@ hittable_list simple_light() {
     objects.add(make_shared<sphere>(point3(0, -1000, 0), 1000, make_shared<lambertian>(check)));
     objects.add(make_shared<sphere>(point3(0, 2, 0), 2, make_shared<lambertian>(color3(0.2, 0.5, 1.0))));
 
-    auto diffLight = make_shared<diffuseLight>(color3(4, 4, 4));
+    auto diffLight = make_shared<diffuseLight>(color3(1, 1, 1));
     objects.add(make_shared<rect>(3, 5, 1, 3, -2, diffLight));
     return objects;
 }
 
+hittable_list cornell_box() {
+    hittable_list objects;
 
+    auto red = make_shared<lambertian>(color3(.65, .05, .05));
+    auto white = make_shared<lambertian>(color3(.73, .73, .73));
+    auto green = make_shared<lambertian>(color3(.12, .45, .15));
+    auto light = make_shared<diffuseLight>(color3(7, 7, 7));
+
+    objects.add(make_shared<yz_rect>(0, 555, 0, 555, 555, green));
+    objects.add(make_shared<yz_rect>(0, 555, 0, 555, 0, red));
+    objects.add(make_shared<xz_rect>(113, 443, 127, 432, 554, light));
+    objects.add(make_shared<xz_rect>(0, 555, 0, 555, 0, white));
+    objects.add(make_shared<xz_rect>(0, 555, 0, 555, 555, white));
+    objects.add(make_shared<rect>(0, 555, 0, 555, 555, white));
+
+    objects.add(make_shared<box>(point3(130, 0, 65), point3(295, 165, 230), white));
+    objects.add(make_shared<box>(point3(265, 0, 295), point3(430, 330, 460), white));
+    return hittable_list(make_shared<bvh_node>(objects));
+    //return objects;
+}
 int main()
 {
     //Image
-    const auto aspect_ratio = 3.0 / 2.0;
-    const int image_width = 1000;
+    auto aspect_ratio = 3.0 / 2.0;
+    int image_width = 1000;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 100;
+    int samples_per_pixel = 100;
     const int max_depth = 50;
     color3 background(0.0, 0.0, 0.0);
     //world
-    hittable_list world = random_scene();
-    hittable_list simpleL = simple_light();
+    hittable_list world;
     point3 lookfrom(13, 2, 3);
     point3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
     double fov = 20.0;
     auto dist_to_focus = 10.0;
-    auto aperture = 0.1;
+    auto aperture = 0.0;
 
-    switch (1)
+    switch (2)
     {
         case 0:
             world = random_scene();
@@ -120,6 +141,16 @@ int main()
             lookfrom = point3(26, 3, 6);
             lookat = point3(0, 2, 0);
             fov = 20.0;
+            break;
+        case 2:
+            world = cornell_box();
+            aspect_ratio = 1.0;
+            image_width = 1000;
+            samples_per_pixel = 500;
+            background = color3(0, 0, 0);
+            lookfrom = point3(278, 278, -800);
+            lookat = point3(278, 278, 0);
+            fov = 40.0;
             break;
         default:
             break;

@@ -59,6 +59,15 @@
     <ClInclude Include="src\rect.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\xz_rect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yz_rect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\box.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\output.ppm" />
