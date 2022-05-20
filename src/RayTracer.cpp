@@ -108,8 +108,17 @@ hittable_list cornell_box() {
     objects.add(make_shared<xz_rect>(0, 555, 0, 555, 555, white));
     objects.add(make_shared<rect>(0, 555, 0, 555, 555, white));
 
-    objects.add(make_shared<box>(point3(130, 0, 65), point3(295, 165, 230), white));
-    objects.add(make_shared<box>(point3(265, 0, 295), point3(430, 330, 460), white));
+    /*objects.add(make_shared<box>(point3(130, 0, 65), point3(295, 165, 230), white));
+    objects.add(make_shared<box>(point3(265, 0, 295), point3(430, 330, 460), white));*/
+    shared_ptr<hittable> box1 = make_shared<box>(point3(0, 0, 0), point3(165, 330, 165), white);
+    box1 = make_shared<rotate_y>(box1, 15);
+    box1 = make_shared<translate>(box1, vec3(265, 0, 295));
+    objects.add(box1);
+
+    shared_ptr<hittable> box2 = make_shared<box>(point3(0, 0, 0), point3(165, 165, 165), white);
+    box2 = make_shared<rotate_y>(box2, -18);
+    box2 = make_shared<translate>(box2, vec3(130, 0, 65));
+    objects.add(box2);
     return hittable_list(make_shared<bvh_node>(objects));
     //return objects;
 }
@@ -117,9 +126,9 @@ int main()
 {
     //Image
     auto aspect_ratio = 3.0 / 2.0;
-    int image_width = 1000;
-    const int image_height = static_cast<int>(image_width / aspect_ratio);
-    int samples_per_pixel = 100;
+    int image_width = 1920;
+    int image_height = static_cast<int>(image_width / aspect_ratio);
+    int samples_per_pixel = 10000;
     const int max_depth = 50;
     color3 background(0.0, 0.0, 0.0);
     //world
@@ -145,12 +154,14 @@ int main()
         case 2:
             world = cornell_box();
             aspect_ratio = 1.0;
-            image_width = 1000;
-            samples_per_pixel = 500;
+            image_width = 1920;
+            samples_per_pixel = 10000;
             background = color3(0, 0, 0);
             lookfrom = point3(278, 278, -800);
             lookat = point3(278, 278, 0);
             fov = 40.0;
+            aspect_ratio = 16 / 9;
+            image_height = static_cast<int>(image_width / aspect_ratio);
             break;
         default:
             break;
